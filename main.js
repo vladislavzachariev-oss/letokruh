@@ -32,11 +32,11 @@
   const mod = (x, y) => x - y * Math.floor(x / y);
   const pm = x => mod((x * 34 + 1) * x, 289);
   const hv = (a, b) => { a = mod(a + 150, 289); b = mod(b + 150, 289); return pm(pm(pm(a) + b) + SEED) / 289; };
-  function plankOrder(x, y) {                // photo px (y down) -> [id, order]
+  function plankOrder(x, y) {                // photo px (y down) -> [id, order]; laid from the viewer towards the windows
     const dy = Math.max(y - YH, 1), u = (x - VX) / dy, w = FL / dy;
     const c = Math.floor((u - U0) / DU), off = hv(c, 7) * PL, r = Math.floor((w + off) / PL);
-    const wc = (r + .5) * PL - off, t = clamp((9 - wc) / 6.8, 0, 1);
-    return [c + ':' + r, t * .78 + hv(c, r) * .14 + Math.min(Math.abs(c + .5) * .006, .08)];
+    const wc = (r + .5) * PL - off, t = clamp((wc - 2.2) / 6.8, 0, 1);
+    return [c + ':' + r, t * .84 + hv(c, r) * .03 + Math.min(Math.abs(c + .5) * .004, .06)];
   }
 
   const hero = $('#hero');
@@ -101,14 +101,17 @@ uniform float uImgA,uP,uZ,uFace;
 const float VX=${VX}.,YH=${YH}.,FL=${FL}.,U0=${U0},DU=${DU},PL=${PL},SEED=${SEED}.;
 float pm(float x){return mod((x*34.+1.)*x,289.);}
 float hv(vec2 i){i=mod(i+150.,289.);return pm(pm(pm(i.x)+i.y)+SEED)/289.;}
-/* how far the plank under photo pixel q (px, y down) is laid; id = column,row */
+/* is photo pixel q (px, y down) already covered by its plank; id = column,row.
+   Rows go from the viewer towards the windows; each plank slides out along its length, near end first. */
 float plank(vec2 q,out vec2 id){
   float dy=max(q.y-YH,1.),u=(q.x-VX)/dy,w=FL/dy;
-  float c=floor((u-U0)/DU),off=hv(vec2(c,7.))*PL,r=floor((w+off)/PL);
+  float c=floor((u-U0)/DU),off=hv(vec2(c,7.))*PL,g=(w+off)/PL,r=floor(g);
   id=vec2(c,r);
-  float wc=(r+.5)*PL-off,t=clamp((9.-wc)/6.8,0.,1.);
-  float o=t*.78+hv(id)*.14+min(abs(c+.5)*.006,.08);
-  return smoothstep(o,o+.06,uP*1.06);
+  float wc=(r+.5)*PL-off,t=clamp((wc-2.2)/6.8,0.,1.);
+  float o=t*.84+hv(id)*.03+min(abs(c+.5)*.004,.06);
+  float a=clamp((uP*1.06-o)/.08,0.,1.);
+  a=1.-(1.-a)*(1.-a)*(1.-a);
+  return 1.-smoothstep(a*1.03-.03,a*1.03,g-r);
 }
 void main(){
   float ca=uRes.x/uRes.y,ra=uC.y*uImgA;
@@ -124,7 +127,7 @@ void main(){
     vec2 id,ib,iS;
     float a=plank(px,id);
     vec3 f=mix(A,B,a);
-    f*=1.+.12*uFace*a*(1.-a)*4.;
+    f*=1.+.05*uFace*a*(1.-a)*4.;
     if(uFace>0.&&a<.999){
       float dy=px.y-YH,fh=.013*dy,sx=(px.x-VX)*.013;
       float ab=plank(px-vec2(0.,fh),ib);
@@ -133,8 +136,8 @@ void main(){
       float onS=clamp((aS-a)*1.2,0.,1.)*step(.5,length(iS-id));
       vec3 face=texture2D(uB,q+vec2(0.,fh/1536.)).rgb*vec3(.5,.47,.44);
       vec3 side=texture2D(uB,q+vec2(sx/(2752.*uC.y),0.)).rgb*.64;
-      float ab2=plank(px-vec2(0.,fh*2.6),ib);
-      f*=1.-.22*uFace*clamp(ab2-a,0.,1.)*(1.-onF);
+      float ab2=plank(px+vec2(0.,fh*.7),ib);
+      f*=1.-.13*uFace*clamp(ab2-a,0.,1.)*(1.-onF);
       f=mix(f,side,onS*uFace);
       f=mix(f,face,onF*uFace);
     }
