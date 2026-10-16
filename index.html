@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Letokruh — podlahy z dřeva, parket a vinylu · Liberec</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="icon-192.png" sizes="192x192" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Ukázka stránky podlaháře: podlaha se při rolování skládá prkno po prknu, dřevo si vyzkoušíte přímo v pokoji a cenu spočítáte hned. Smyšlená značka; Vladislav Zachariev, Whyte Lynx.">
+<meta name="theme-color" content="#ffffff">
+<meta name="robots" content="noindex">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Letokruh — ukázka stránky od Whyte Lynx">
+<meta property="og:description" content="Podlaha, která se skládá prkno po prknu, dřevo vyzkoušené v pokoji a cena spočítaná hned. Smyšlená značka, ukázka práce Whyte Lynx.">
+<meta property="og:image" content="https://vladislavzachariev-oss.github.io/letokruh/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:url" content="https://vladislavzachariev-oss.github.io/letokruh/">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preload" as="image" href="img/pokoj-0-p.webp" media="(max-aspect-ratio: 4/5)">
+<link rel="preload" as="image" href="img/pokoj-0.webp" media="(min-aspect-ratio: 4/5)">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <a class="brand" href="#top" aria-label="Letokruh, na začátek">Letokruh</a>
+  <nav class="nav__links" aria-label="Hlavní">
+    <a href="#vzorky">Podlahy</a>
+    <a href="#vzory">Pokládka</a>
+    <a href="#postup">Postup</a>
+    <a href="#cena">Cena</a>
+  </nav>
+  <a class="nav__cta" href="#poptavka">Nezávazné zaměření</a>
+</header>
+
+<main id="top">
+
+  <!-- 1. Pokoj: podlaha se skládá prkno po prknu, pak se dá vyměnit -->
+  <section class="hero" id="hero" aria-label="Podlaha prkno po prknu">
+    <div class="hero__stage">
+      <div class="hero__copy">
+        <h1 class="hero__title">Podlahy ze dřeva, parket a vinylu</h1>
+        <p class="hero__lead">Liberec a okolí. Zaměříme, přivezeme vzorky, připravíme podklad, položíme a naolejujeme.</p>
+      </div>
+      <div class="hero__frame">
+        <canvas class="hero__gl" id="gl" aria-hidden="true"></canvas>
+        <div class="hero__fallback" id="fallback" aria-hidden="true"><img alt=""><img alt=""></div>
+        <div class="pick" id="pick" role="group" aria-label="Podlaha v pokoji">
+          <button type="button" data-f="dub" aria-pressed="true"><img src="img/vzorek-dub.webp" alt="">Dub</button>
+          <button type="button" data-f="orech" aria-pressed="false"><img src="img/vzorek-orech.webp" alt="">Ořech</button>
+          <button type="button" data-f="kost" aria-pressed="false"><img src="img/vzorek-kost.webp" alt="">Rybí kost</button>
+          <button type="button" data-f="vinyl" aria-pressed="false"><img src="img/vzorek-vinyl.webp" alt="">Vinyl</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Vzorky -->
+  <section class="samples" id="vzorky" aria-labelledby="vzorkyT">
+    <div class="wrap">
+      <h2 class="h2" id="vzorkyT">Podlahy</h2>
+      <p class="sub">Vzorky přivezeme k Vám domů, ať podlahu vidíte ve svém světle.</p>
+    </div>
+    <div class="cards" id="cards">
+      <article class="card" data-f="dub">
+        <div class="card__img"><img src="img/vzorek-dub.webp" alt="Vzorek dubového prkna, přírodní olej" loading="lazy"></div>
+        <h3>Dub přírodní</h3>
+        <p>Třívrstvé prkno s olejem. Světlý odstín, který se hodí skoro všude. Škrábance jdou přebrousit jen v místě.</p>
+        <p class="card__spec">Obývák, ložnice, chodba · šířka od 18 cm</p>
+        <button type="button" class="card__go" data-f="dub">Ukázat v pokoji</button>
+      </article>
+      <article class="card" data-f="orech">
+        <div class="card__img"><img src="img/vzorek-orech.webp" alt="Vzorek ořechového prkna" loading="lazy"></div>
+        <h3>Americký ořech</h3>
+        <p>Tmavé dřevo s výraznou kresbou. Nejlépe vynikne v prostorných a světlých místnostech.</p>
+        <p class="card__spec">Obývák, pracovna · šířka od 15 cm</p>
+        <button type="button" class="card__go" data-f="orech">Ukázat v pokoji</button>
+      </article>
+      <article class="card" data-f="kost">
+        <div class="card__img"><img src="img/vzorek-kost.webp" alt="Vzorek dubové rybí kosti" loading="lazy"></div>
+        <h3>Dubová rybí kost</h3>
+        <p>Menší dílce skládané do vzoru, jak se kladly ve starých vilách. Pokládka trvá déle než u prken.</p>
+        <p class="card__spec">Vila, byt ve starém domě · dílec 9 × 60 cm</p>
+        <button type="button" class="card__go" data-f="kost">Ukázat v pokoji</button>
+      </article>
+      <article class="card" data-f="vinyl">
+        <div class="card__img"><img src="img/vzorek-vinyl.webp" alt="Vzorek vinylové dlaždice v dekoru kamene" loading="lazy"></div>
+        <h3>Vinyl v dekoru kamene</h3>
+        <p>Velké dlaždice, kterým nevadí voda ani psí drápy. Na podlahové topení i do kuchyně.</p>
+        <p class="card__spec">Kuchyň, koupelna, chodba · formát 60 × 120 cm</p>
+        <button type="button" class="card__go" data-f="vinyl">Ukázat v pokoji</button>
+      </article>
+    </div>
+  </section>
+
+  <!-- 3. Vzory pokládky -->
+  <section class="lay" id="vzory" aria-labelledby="vzoryT">
+    <div class="wrap lay__grid">
+      <div class="lay__copy">
+        <h2 class="h2" id="vzoryT">Způsoby pokládky</h2>
+        <p class="sub" id="layTxt">Prkna rovně, na vazbu. Nejrychlejší pokládka a nejmenší prořez. Místnost se opticky prodlouží ve směru prken.</p>
+        <div class="tabs" role="tablist" aria-label="Vzor pokládky" id="layTabs">
+          <button type="button" role="tab" aria-selected="true" data-p="rovne">Prkna rovně</button>
+          <button type="button" role="tab" aria-selected="false" data-p="kost">Rybí kost</button>
+          <button type="button" role="tab" aria-selected="false" data-p="fr">Francouzská kost</button>
+          <button type="button" role="tab" aria-selected="false" data-p="kazety">Kazety</button>
+        </div>
+      </div>
+      <div class="lay__canvas"><canvas id="layCv" aria-label="Náhled vzoru pokládky shora" role="img"></canvas></div>
+    </div>
+  </section>
+
+  <!-- 4. Postup -->
+  <section class="steps" id="postup" aria-labelledby="postupT">
+    <div class="wrap">
+      <h2 class="h2" id="postupT">Jak to probíhá</h2>
+      <ol class="steps__list">
+        <li class="step"><h3>Zaměření</h3><p>Přijedeme, změříme místnosti a vlhkost podkladu. Hned víte, kolik materiálu potřebujete.</p></li>
+        <li class="step"><h3>Vzorky</h3><p>Přivezeme vzorky podlah, které připadají v úvahu, a vyzkoušíte si je u sebe doma.</p></li>
+        <li class="step"><h3>Podklad</h3><p>Odstraníme starou podlahu, podklad vyrovnáme a necháme vyschnout. Na rovném podkladu podlaha nevrže.</p></li>
+        <li class="step"><h3>Pokládka</h3><p>Položíme, naolejujeme, osadíme lišty a uklidíme. Dostanete i návod na údržbu.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 5. Kalkulačka -->
+  <section class="calc" id="cena" aria-labelledby="cenaT">
+    <div class="wrap calc__grid">
+      <div class="calc__form">
+        <h2 class="h2" id="cenaT">Orientační cena</h2>
+        <div class="field">
+          <div class="field__top"><label for="area">Plocha</label><output id="areaOut">32 m²</output></div>
+          <input type="range" id="area" min="6" max="160" step="1" value="32">
+        </div>
+        <div class="field">
+          <p class="field__lbl" id="matL">Podlaha</p>
+          <div class="seg" role="radiogroup" aria-labelledby="matL" id="mat">
+            <button type="button" role="radio" aria-checked="true" data-f="dub">Dub</button>
+            <button type="button" role="radio" aria-checked="false" data-f="orech">Ořech</button>
+            <button type="button" role="radio" aria-checked="false" data-f="kost">Rybí kost</button>
+            <button type="button" role="radio" aria-checked="false" data-f="vinyl">Vinyl</button>
+          </div>
+        </div>
+        <div class="field checks">
+          <label class="check"><input type="checkbox" id="old" checked><span>Odstranit starou podlahu</span></label>
+          <label class="check"><input type="checkbox" id="level"><span>Vyrovnat podklad</span></label>
+          <label class="check"><input type="checkbox" id="skirt" checked><span>Nové lišty</span></label>
+        </div>
+      </div>
+      <aside class="bill" aria-live="polite">
+        <p class="bill__name" id="billName">Dub přírodní, třívrstvá prkna</p>
+        <p class="bill__sub" id="billSub">32 m² · s prořezem 35 m²</p>
+        <ul class="bill__rows" id="billRows"></ul>
+        <p class="bill__lbl">Odhad celkem</p>
+        <p class="bill__sum" id="billSum">—</p>
+        <p class="bill__note">Ukázkové ceny. Na Vašem webu budou Vaše.</p>
+        <a class="bill__cta" href="#poptavka" id="billCta">Chci přesnou nabídku</a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 6. Poptávka -->
+  <section class="ask" id="poptavka" aria-labelledby="poptavkaT">
+    <div class="wrap ask__grid">
+      <div>
+        <h2 class="h2" id="poptavkaT">Nezávazné zaměření</h2>
+        <p class="sub">V Liberci a okolí. Ozveme se do druhého dne a domluvíme termín.</p>
+      </div>
+      <form class="ask__form" id="askForm" novalidate>
+        <label class="in"><span>Jméno</span><input type="text" id="aName" autocomplete="name" placeholder="Jana Nováková"></label>
+        <label class="in"><span>Telefon</span><input type="tel" id="aTel" autocomplete="tel" placeholder="777 123 456"></label>
+        <label class="in"><span>Obec</span><input type="text" id="aTown" autocomplete="address-level2" placeholder="Liberec"></label>
+        <label class="in in--wide"><span>Co chystáte</span><input type="text" id="aWhat" placeholder="Obývák a chodba, asi 40 m²"></label>
+        <button class="ask__send" type="submit">Odeslat</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <p class="foot__brand">Letokruh</p>
+  <p>Podlahy pro Liberec a okolí</p>
+  <p>Ukázka · smyšlená značka · Vladislav Zachariev, <a href="https://whytelynx.cz" target="_blank" rel="noopener">Whyte Lynx</a></p>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="vendor/lenis.min.js"></script>
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="main.js"></script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "5ae95e24cc924a0e84e28a82659ff3dc"}'></script>
+</body>
+</html>
