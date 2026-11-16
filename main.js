@@ -417,7 +417,7 @@ void main(){
   $('#askForm').addEventListener('submit', e => {
     e.preventDefault();
     if (!$('#aName').value.trim()) { toast('Doplňte prosím jméno.'); $('#aName').focus(); return; }
-    if ($('#aTel').value.replace(/\D/g, '').length < 9) { toast('Doplňte telefon, ať se Vám můžeme ozvat.'); $('#aTel').focus(); return; }
+    if ($('#aTel').value.replace(/\D/g, '').length < 9) { toast('Doplňte telefon, ať se vám můžeme ozvat.'); $('#aTel').focus(); return; }
     toast('Děkujeme. Tohle je jen ukázka, poptávka se nikam neodeslala.');
   });
 
