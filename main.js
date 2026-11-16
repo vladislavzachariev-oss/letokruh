@@ -113,6 +113,13 @@ float plank(vec2 q,out vec2 id){
   a=1.-(1.-a)*(1.-a)*(1.-a);
   return 1.-smoothstep(a*1.03-.03,a*1.03,g-r);
 }
+/* the skirting board (green channel of the mask) is not part of the plank grid: the bare-screed photo has
+   none, so it is fitted whole, in one smooth sweep, right after the planks along that wall are down */
+float skirt(vec2 q){
+  float dy=max(q.y-YH,1.),u=(q.x-VX)/dy,w=FL/dy;
+  float o=clamp((w-2.2)/6.8,0.,1.)*.84+min(abs((u-U0)/DU)*.004,.06)+.04;
+  return max(smoothstep(0.,1.,clamp((uP*1.06-o)/.07,0.,1.)),step(.995,uP));
+}
 void main(){
   float ca=uRes.x/uRes.y,ra=uC.y*uImgA;
   vec2 q=vUv;
@@ -121,7 +128,8 @@ void main(){
   vec2 p=vec2(uC.x+q.x*uC.y,q.y);
   vec2 px=vec2(p.x*2752.,(1.-p.y)*1536.);
   vec3 A=texture2D(uA,q).rgb,B=texture2D(uB,q).rgb;
-  float m=texture2D(uM,p).r;
+  vec2 mk=texture2D(uM,p).rg;
+  float m=mk.r,lb=mk.g;
   vec3 col=mix(A,B,smoothstep(0.,1.,uP));
   if(m>.002){
     vec2 id,ib,iS;
@@ -131,16 +139,22 @@ void main(){
     if(uFace>0.&&a<.999){
       float dy=px.y-YH,fh=.013*dy,sx=(px.x-VX)*.013;
       float ab=plank(px-vec2(0.,fh),ib);
-      float onF=clamp((ab-a)*1.2,0.,1.)*step(.5,length(ib-id));
-      float aS=plank(px+vec2(sx,0.),iS);
-      float onS=clamp((aS-a)*1.2,0.,1.)*step(.5,length(iS-id));
+      /* end face only: the plank right behind in the same column, never the slanted neighbour column */
+      float onF=clamp((ab-a)*1.2,0.,1.)*step(abs(ib.x-id.x),.5)*step(.5,abs(ib.y-id.y));
+      /* long side of the neighbouring plank (the one further from the centre line): measured across the
+         column edge at the same depth, so it is one clean strip, not a saw-tooth of offset samples */
+      float sd=sign(px.x-VX),dd=max(dy,1.),cu=(px.x-VX)/dd,fc=fract((cu-U0)/DU),cc=floor((cu-U0)/DU);
+      float sw=abs(sx)*.8,dpx=(sd>0.?1.-fc:fc)*DU*dd;
+      float aS=plank(vec2(VX+(U0+(cc+step(0.,sd))*DU+sd*.0005)*dd,px.y),iS);
+      float onS=clamp((aS-a)*1.2,0.,1.)*(1.-smoothstep(sw*.7,sw,dpx));
       vec3 face=texture2D(uB,q+vec2(0.,fh/1536.)).rgb*vec3(.5,.47,.44);
-      vec3 side=texture2D(uB,q+vec2(sx/(2752.*uC.y),0.)).rgb*.64;
+      vec3 side=B*.66;
       float ab2=plank(px+vec2(0.,fh*.7),ib);
-      f*=1.-.13*uFace*clamp(ab2-a,0.,1.)*(1.-onF);
+      f*=1.-.13*uFace*clamp(ab2-a,0.,1.)*(1.-onF)*step(abs(ib.x-id.x),.5);
       f=mix(f,side,onS*uFace);
       f=mix(f,face,onF*uFace);
     }
+    if(lb>.002)f=mix(f,uFace>.99?mix(A,B,skirt(px)):col,lb);
     col=mix(col,f,m);
   }
   gl_FragColor=vec4(col,1.);
