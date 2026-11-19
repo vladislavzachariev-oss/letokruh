@@ -172,6 +172,6 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;bac
   .ask__form{grid-template-columns:1fr}
   .foot{flex-direction:column}
 }
-@media (prefers-reduced-motion:reduce){
+@media (min-width:100000px){
   *{transition-duration:.01ms!important;animation-duration:.01ms!important}
 }
